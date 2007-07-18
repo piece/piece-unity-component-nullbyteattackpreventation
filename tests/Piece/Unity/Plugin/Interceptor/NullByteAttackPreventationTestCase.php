@@ -36,7 +36,7 @@
  * @since      File available since Release 1.0.0
  */
 
-require dirname(__FILE__) . '/../../../../prepare.php';
+require_once realpath(dirname(__FILE__) . '/../../../../prepare.php');
 require_once 'PHPUnit.php';
 require_once 'Piece/Unity/Plugin/Interceptor/NullByteAttackPreventation.php';
 require_once 'Piece/Unity/Context.php';
