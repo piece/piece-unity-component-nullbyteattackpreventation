@@ -40,6 +40,7 @@ require_once realpath(dirname(__FILE__) . '/../../../../prepare.php');
 require_once 'PHPUnit.php';
 require_once 'Piece/Unity/Plugin/Interceptor/NullByteAttackPreventation.php';
 require_once 'Piece/Unity/Context.php';
+require_once 'Piece/Unity/Config.php';
 
 // {{{ Piece_Unity_Plugin_Interceptor_NullByteAttackPreventationTestCase
 
@@ -84,9 +85,11 @@ class Piece_Unity_Plugin_Interceptor_NullByteAttackPreventationTestCase extends 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_POST['foo'] = "foo\x00foo";
         $_POST['bar'] = array("bar1\x00bar1", array("bar2\x00bar2"));
+        $config = &new Piece_Unity_Config();
+        $context = &Piece_Unity_Context::singleton();
+        $context->setConfiguration($config);
         $interceptor = &new Piece_Unity_Plugin_Interceptor_NullByteAttackPreventation();
         $interceptor->invoke();
-        $context = &Piece_Unity_Context::singleton();
         $request = &$context->getRequest();
 
         $this->assertEquals('foofoo', $request->getParameter('foo'));
