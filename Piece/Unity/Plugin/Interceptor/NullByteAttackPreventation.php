@@ -130,4 +130,3 @@ class Piece_Unity_Plugin_Interceptor_NullByteAttackPreventation extends Piece_Un
  * indent-tabs-mode: nil
  * End:
  */
-?>
