@@ -4,7 +4,7 @@
 /**
  * PHP versions 4 and 5
  *
- * Copyright (c) 2006-2007 KUBO Atsuhiro <iteman@users.sourceforge.net>,
+ * Copyright (c) 2006-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>,
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
  *
  * @package    Piece_Unity
  * @subpackage Piece_Unity_Component_NullByteAttackPreventation
- * @copyright  2006-2007 KUBO Atsuhiro <iteman@users.sourceforge.net>
+ * @copyright  2006-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License (revised)
  * @version    SVN: $Id$
  * @since      File available since Release 1.0.0
@@ -45,11 +45,11 @@ require_once 'Piece/Unity/Config.php';
 // {{{ Piece_Unity_Plugin_Interceptor_NullByteAttackPreventationTestCase
 
 /**
- * TestCase for Piece_Unity_Plugin_Interceptor_NullByteAttackPreventation
+ * Some tests for Piece_Unity_Plugin_Interceptor_NullByteAttackPreventation.
  *
  * @package    Piece_Unity
  * @subpackage Piece_Unity_Component_NullByteAttackPreventation
- * @copyright  2006-2007 KUBO Atsuhiro <iteman@users.sourceforge.net>
+ * @copyright  2006-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License (revised)
  * @version    Release: @package_version@
  * @since      Class available since Release 1.0.0
@@ -91,11 +91,18 @@ class Piece_Unity_Plugin_Interceptor_NullByteAttackPreventationTestCase extends 
         $interceptor = &new Piece_Unity_Plugin_Interceptor_NullByteAttackPreventation();
         $interceptor->invoke();
         $request = &$context->getRequest();
+        $foo = $request->getParameter('foo');
 
-        $this->assertEquals('foofoo', $request->getParameter('foo'));
+        $this->assertEquals(7, strlen($_POST['foo']));
+        $this->assertEquals(6, strlen($foo));
+        $this->assertEquals('foofoo', $foo);
 
         $bar = $request->getParameter('bar');
 
+        $this->assertEquals(9, strlen($_POST['bar'][0]));
+        $this->assertEquals(9, strlen($_POST['bar'][1][0]));
+        $this->assertEquals(8, strlen($bar[0]));
+        $this->assertEquals(8, strlen($bar[1][0]));
         $this->assertEquals('bar1bar1', $bar[0]);
         $this->assertEquals('bar2bar2', $bar[1][0]);
 
